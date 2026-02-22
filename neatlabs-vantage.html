@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEATLABS™ VANTAGE — Expert Intelligence Discovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=Syne+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b0f;
+    --surface: #0d1117;
+    --surface2: #131920;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #e8edf2;
+    --muted: rgba(232,237,242,0.45);
+    --dim: rgba(232,237,242,0.22);
+    --amber: #f0a500;
+    --amber-dim: rgba(240,165,0,0.12);
+    --amber-glow: rgba(240,165,0,0.25);
+    --teal: #00d4aa;
+    --teal-dim: rgba(0,212,170,0.1);
+    --red: #ff4d6d;
+    --blue: #0a66c2;
+    --blue-dim: rgba(10,102,194,0.15);
+    --blue-bright: #4d9de0;
+    --green: #4ade80;
+    --purple: #a78bfa;
+  }
+
+  /* ─── LIGHT MODE (Microsoft Fluent Vibe) ─── */
+  html[data-theme="light"] {
+    --bg: #f3f3f3;
+    --surface: #ffffff;
+    --surface2: #f0f0f0;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.14);
+    --text: #201f1e;
+    --muted: rgba(32,31,30,0.58);
+    --dim: rgba(32,31,30,0.35);
+    --amber: #c87000;
+    --amber-dim: rgba(200,112,0,0.08);
+    --amber-glow: rgba(200,112,0,0.2);
+    --teal: #0d7377;
+    --teal-dim: rgba(13,115,119,0.08);
+    --red: #d13438;
+    --blue: #0078d4;
+    --blue-dim: rgba(0,120,212,0.10);
+    --blue-bright: #0078d4;
+    --green: #107c10;
+    --purple: #5c2d91;
+  }
+
+  html[data-theme="light"] body {
+    background: #f3f3f3;
+  }
+
+  html[data-theme="light"] body::before { opacity: 0; }
+
+  html[data-theme="light"] body::after {
+    background-image:
+      linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
+  }
+
+  html[data-theme="light"] .expert-card {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.08);
+  }
+
+  html[data-theme="light"] .expert-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10), 0 0 1px rgba(0,0,0,0.1);
+  }
+
+  html[data-theme="light"] .panel {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  html[data-theme="light"] .lev-card,
+  html[data-theme="light"] .help-card,
+  html[data-theme="light"] .lev-workflow {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+
+  html[data-theme="light"] .brand-dot {
+    box-shadow: 0 0 10px var(--teal);
+  }
+
+  html[data-theme="light"] ::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+  }
+
+  html[data-theme="light"] .neatlabs-banner {
+    background: linear-gradient(135deg, #0078d4 0%, #106ebe 40%, #005a9e 100%);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  html[data-theme="light"] .neatlabs-banner::before {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  }
+
+  html[data-theme="light"] .sort-select {
+    color: var(--text);
+  }
+
+  /* ─── THEME TOGGLE BUTTON ─── */
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--blue-bright);
+    color: var(--blue-bright);
+  }
+
+  .theme-toggle-icon {
+    font-size: 13px;
+    transition: transform 0.4s ease;
+  }
+
+  html[data-theme="light"] .theme-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  /* ─── NEATLABS.AI BANNER ─── */
+  .neatlabs-banner {
+    background: linear-gradient(135deg, #0a1628 0%, #0d1f3c 40%, #0a1628 100%);
+    border-top: 1px solid rgba(240,165,0,0.2);
+    border-bottom: 1px solid rgba(240,165,0,0.2);
+    position: relative;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+
+  .neatlabs-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(240,165,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,165,0,0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  .neatlabs-banner::after {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,120,212,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  html[data-theme="light"] .neatlabs-banner::after {
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  }
+
+  .neatlabs-banner-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .banner-left { flex: 1; min-width: 280px; }
+
+  .banner-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+    opacity: 0.9;
+  }
+
+  html[data-theme="light"] .banner-eyebrow { color: rgba(255,255,255,0.7); }
+
+  .banner-headline {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  .banner-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .banner-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .banner-chip {
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.5px;
+  }
+
+  .banner-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .banner-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 28px;
+    background: var(--amber);
+    color: #080b0f;
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+  }
+
+  html[data-theme="light"] .banner-cta {
+    background: #ffffff;
+    color: #0078d4;
+  }
+
+  .banner-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(240,165,0,0.35);
+  }
+
+  html[data-theme="light"] .banner-cta:hover {
+    box-shadow: 0 8px 28px rgba(255,255,255,0.3);
+  }
+
+  .banner-cta-arrow { font-size: 16px; transition: transform 0.2s; }
+  .banner-cta:hover .banner-cta-arrow { transform: translateX(3px); }
+
+  .banner-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.5px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* GRID BG */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(240,165,0,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,165,0,0.015) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; }
+
+  /* ─── HEADER ─── */
+  header {
+    padding: 48px 40px 32px;
+    max-width: 1280px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .brand-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 16px var(--teal);
+    animation: breathe 2.5s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%,100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  .brand-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+
+  h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 12px;
+  }
+
+  h1 span { color: var(--amber); }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 560px;
+    font-weight: 400;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ─── LAYOUT ─── */
+  .main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 40px 80px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    position: sticky;
+    top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Search */
+  .search-wrap {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 9px 12px 9px 36px;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.2s;
+    position: relative;
+  }
+
+  .search-input:focus { border-color: var(--amber); }
+  .search-input::placeholder { color: var(--dim); }
+
+  .search-wrap-inner {
+    position: relative;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dim);
+    font-size: 14px;
+    pointer-events: none;
+  }
+
+  /* Domain filters */
+  .domain-list { padding: 8px; }
+
+  .domain-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    transition: all 0.15s ease;
+    position: relative;
+  }
+
+  .domain-btn:hover { background: var(--surface2); color: var(--text); }
+
+  .domain-btn.active {
+    background: var(--amber-dim);
+    color: var(--amber);
+    border: 1px solid rgba(240,165,0,0.2);
+  }
+
+  .domain-icon { font-size: 14px; flex-shrink: 0; }
+
+  .domain-count {
+    margin-left: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    background: var(--surface2);
+    padding: 2px 7px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+
+  .domain-btn.active .domain-count {
+    background: rgba(240,165,0,0.15);
+    color: var(--amber);
+  }
+
+  /* My Feed panel */
+  .feed-list {
+    padding: 8px;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+
+  .feed-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--surface2);
+    margin-bottom: 4px;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .feed-item:last-child { margin-bottom: 0; }
+
+  .feed-remove {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--dim);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 2px;
+    border-radius: 4px;
+    transition: color 0.15s;
+  }
+
+  .feed-remove:hover { color: var(--red); }
+
+  .feed-empty {
+    padding: 24px 18px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--dim);
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.7;
+  }
+
+  .feed-empty-icon { font-size: 24px; margin-bottom: 8px; }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: none;
+    text-decoration: none;
+  }
+
+  .btn-amber {
+    background: var(--amber);
+    color: #080b0f;
+  }
+
+  .btn-amber:hover { background: #ffb800; transform: translateY(-1px); box-shadow: 0 4px 20px var(--amber-glow); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border2);
+  }
+
+  .btn-ghost:hover { background: var(--surface2); color: var(--text); }
+
+  .btn-linkedin {
+    background: var(--blue-dim);
+    color: var(--blue-bright);
+    border: 1px solid rgba(10,102,194,0.25);
+  }
+
+  .btn-linkedin:hover {
+    background: rgba(10,102,194,0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(10,102,194,0.2);
+  }
+
+  .panel-footer { padding: 14px 18px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+
+  /* ─── CONTENT AREA ─── */
+  .content { min-width: 0; }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .results-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-right: auto;
+  }
+
+  .results-label strong { color: var(--amber); }
+
+  .sort-select {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  /* Expert cards grid */
+  .experts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+
+  /* Expert card */
+  .expert-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: fadeIn 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .expert-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .expert-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .expert-card:hover::before { opacity: 1; }
+
+  .card-saved { border-color: rgba(240,165,0,0.3) !important; }
+  .card-saved::before { opacity: 1 !important; }
+
+  .expert-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .expert-avatar {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    font-weight: 700;
+    color: var(--amber);
+    font-family: 'Syne', sans-serif;
+  }
+
+  .expert-meta { flex: 1; min-width: 0; }
+
+  .expert-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+  }
+
+  .expert-title {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+    font-family: 'IBM Plex Mono', monospace;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .save-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--dim);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .save-btn:hover { border-color: var(--amber); color: var(--amber); background: var(--amber-dim); }
+  .save-btn.saved { border-color: var(--amber); color: var(--amber); background: var(--amber-dim); }
+
+  /* Domains on card */
+  .card-domains {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .domain-tag {
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-family: 'IBM Plex Mono', monospace;
+    border: 1px solid;
+  }
+
+  /* Signals */
+  .signals-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .signal-chip {
+    padding: 3px 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* Known for */
+  .known-for {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Footer row */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+
+  .freq-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .freq-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 6px var(--teal);
+  }
+
+  .follow-btn {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--blue-dim);
+    border: 1px solid rgba(10,102,194,0.3);
+    border-radius: 7px;
+    color: var(--blue-bright);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    letter-spacing: 0.5px;
+  }
+
+  .follow-btn:hover {
+    background: rgba(10,102,194,0.28);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(10,102,194,0.25);
+    color: #fff;
+  }
+
+  .li-icon {
+    width: 12px; height: 12px;
+    fill: currentColor;
+  }
+
+  /* No results */
+  .no-results {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 60px 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--dim);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .no-results-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--surface2);
+    border: 1px solid var(--amber);
+    color: var(--text);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+    z-index: 999;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Starter packs */
+  .starter-packs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .pack-btn {
+    padding: 7px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    transition: all 0.15s ease;
+    letter-spacing: 0.3px;
+  }
+
+  .pack-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
+
+  /* ─── HELP PANEL ─── */
+  .help-bar {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .help-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: left;
+    transition: color 0.15s;
+  }
+
+  .help-toggle:hover { color: var(--amber); }
+  .help-toggle-arrow { margin-left: auto; transition: transform 0.25s ease; font-size: 14px; }
+  .help-toggle.open .help-toggle-arrow { transform: rotate(180deg); }
+
+  .help-content {
+    display: none;
+    padding: 24px 0 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .help-content.open { display: block; animation: fadeIn 0.2s ease; }
+
+  .help-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .help-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .help-card-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+
+  .help-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .help-card-body {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.75;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .help-tip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .help-tip strong { color: var(--teal); }
+
+  /* ─── DISCLAIMER / FOOTER ─── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 40px 40px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .disclaimer-box {
+    background: var(--surface);
+    border: 1px solid rgba(240,165,0,0.2);
+    border-left: 3px solid var(--amber);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .disclaimer-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  .disclaimer-text {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .disclaimer-text strong { color: var(--amber); font-weight: 600; }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer-brand {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  .footer-brand span { color: var(--amber); }
+
+  .footer-copy {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 0.3px;
+  }
+
+  /* Scroll hint */
+  .scroll-fade {
+    position: relative;
+  }
+
+  .scroll-fade::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(transparent, var(--surface));
+    border-radius: 0 0 12px 12px;
+    pointer-events: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .main { grid-template-columns: 1fr; padding: 20px; }
+    .sidebar { position: static; }
+    header { padding: 32px 20px 24px; }
+    .experts-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── LEVERAGE SECTION ─── */
+  .leverage-bar {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .leverage-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: left;
+    transition: color 0.15s;
+  }
+
+  .leverage-toggle:hover { color: var(--amber); }
+  .leverage-toggle-arrow { margin-left: auto; transition: transform 0.25s ease; font-size: 14px; }
+  .leverage-toggle.open .leverage-toggle-arrow { transform: rotate(180deg); }
+
+  .leverage-content {
+    display: none;
+    padding: 32px 0 36px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .leverage-content.open { display: block; animation: fadeIn 0.2s ease; }
+
+  .leverage-intro {
+    max-width: 760px;
+    margin-bottom: 32px;
+  }
+
+  .leverage-intro h2 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .leverage-intro h2 span { color: var(--amber); }
+
+  .leverage-intro p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.75;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .leverage-section-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 14px;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .leverage-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .leverage-use-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .lev-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .lev-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+
+  .lev-card-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .lev-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .lev-card-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .lev-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+
+  .lev-card-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .lev-card-body {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .lev-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .lev-bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 1.5;
+  }
+
+  .lev-bullet-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .lev-workflow {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 14px;
+  }
+
+  .lev-workflow-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lev-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .lev-step {
+    background: var(--surface2);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .lev-step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  .lev-step-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .lev-step-desc {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .lev-callout {
+    background: var(--amber-dim);
+    border: 1px solid rgba(240,165,0,0.2);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-top: 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .lev-callout-icon { font-size: 20px; flex-shrink: 0; }
+
+  .lev-callout-body {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .lev-callout-body strong { color: var(--amber); }
+
+  /* Domain color map */
+  .tag-threat { color: #ff6b6b; border-color: rgba(255,107,107,0.3); background: rgba(255,107,107,0.08); }
+  .tag-vuln { color: #ffa94d; border-color: rgba(255,169,77,0.3); background: rgba(255,169,77,0.08); }
+  .tag-privacy { color: #69db7c; border-color: rgba(105,219,124,0.3); background: rgba(105,219,124,0.08); }
+  .tag-cmmc { color: #74c0fc; border-color: rgba(116,192,252,0.3); background: rgba(116,192,252,0.08); }
+  .tag-cloud { color: #4dabf7; border-color: rgba(77,171,247,0.3); background: rgba(77,171,247,0.08); }
+  .tag-ir { color: #ff8787; border-color: rgba(255,135,135,0.3); background: rgba(255,135,135,0.08); }
+  .tag-ot { color: #cc5de8; border-color: rgba(204,93,232,0.3); background: rgba(204,93,232,0.08); }
+  .tag-appsec { color: #f783ac; border-color: rgba(247,131,172,0.3); background: rgba(247,131,172,0.08); }
+  .tag-osint { color: #a9e34b; border-color: rgba(169,227,75,0.3); background: rgba(169,227,75,0.08); }
+  .tag-fed { color: #63e6be; border-color: rgba(99,230,190,0.3); background: rgba(99,230,190,0.08); }
+  .tag-ai { color: #da77f2; border-color: rgba(218,119,242,0.3); background: rgba(218,119,242,0.08); }
+  .tag-leadership { color: #f0a500; border-color: rgba(240,165,0,0.3); background: rgba(240,165,0,0.08); }
+  .tag-malware { color: #ff6b6b; border-color: rgba(255,107,107,0.3); background: rgba(255,107,107,0.08); }
+  .tag-supplychain { color: #ffd43b; border-color: rgba(255,212,59,0.3); background: rgba(255,212,59,0.08); }
+  .tag-ransom { color: #ff922b; border-color: rgba(255,146,43,0.3); background: rgba(255,146,43,0.08); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<header>
+  <div class="brand">
+    <div class="brand-dot"></div>
+    <span class="brand-label">NEATLABS™ VANTAGE — Expert Intelligence Discovery</span>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Switch to light mode">
+      <span class="theme-toggle-icon" id="themeIcon">☀️</span>
+      <span id="themeLabel">Light Mode</span>
+    </button>
+    <button onclick="toggleHelp()" style="background:var(--surface2);border:1px solid var(--border2);color:var(--muted);padding:5px 13px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">? How to Use</button>
+    <button onclick="toggleLeverage()" style="background:var(--surface2);border:1px solid var(--border2);color:var(--muted);padding:5px 13px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='var(--amber)';this.style.color='var(--amber)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">💡 How to Leverage This</button>
+  </div>
+  <div class="header-top">
+    <div>
+      <h1>NEATLABS™<br><span>VANTAGE</span></h1>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Expert Intelligence Discovery</p>
+      <p class="subtitle">A higher vantage point changes everything. Stop chasing aggregators — the sharpest cyber intelligence comes from the people doing the actual work. Build your expert feed and see threats before they reach the valley floor.</p>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-num" id="totalExperts">58</span>
+      <span class="stat-label">Vetted Experts</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">14</span>
+      <span class="stat-label">Domains</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">Free</span>
+      <span class="stat-label">No Login · No Tracking</span>
+    </div>
+  </div>
+</header>
+
+<!-- HELP / QUICKSTART -->
+<div class="help-bar">
+  <button class="help-toggle" id="helpToggle" onclick="toggleHelp()">
+    <span>📖</span>
+    <span>VANTAGE Quickstart — How to Use This Tool</span>
+    <span class="help-toggle-arrow">▼</span>
+  </button>
+  <div class="help-content" id="helpContent">
+    <div class="help-grid">
+      <div class="help-card">
+        <span class="help-card-icon">🎯</span>
+        <div class="help-card-title">1. Pick Your Domains</div>
+        <div class="help-card-body">Use the sidebar filters to select the cybersecurity specialties you care about — threat intel, CMMC, OSINT, OT/ICS, and more. Mix and match freely.</div>
+      </div>
+      <div class="help-card">
+        <span class="help-card-icon">⚡</span>
+        <div class="help-card-title">2. Try a Starter Pack</div>
+        <div class="help-card-body">Not sure where to start? Hit one of the pre-built packs like "SOC Analyst Starter" or "GovSec & CMMC" to instantly filter to the most relevant experts.</div>
+      </div>
+      <div class="help-card">
+        <span class="help-card-icon">🔍</span>
+        <div class="help-card-title">3. Search by Name or Topic</div>
+        <div class="help-card-body">Use the search bar to find experts by name, organization, keyword, or known specialty. Works across all fields in each expert's profile.</div>
+      </div>
+      <div class="help-card">
+        <span class="help-card-icon">★</span>
+        <div class="help-card-title">4. Bookmark Your Favorites</div>
+        <div class="help-card-body">Click the ☆ star on any card to add them to your Follow List in the sidebar. Stars turn amber and the card highlights so you always know who you've saved.</div>
+      </div>
+      <div class="help-card">
+        <span class="help-card-icon">🔗</span>
+        <div class="help-card-title">5. Click "Follow on LinkedIn"</div>
+        <div class="help-card-body">Each button runs a targeted LinkedIn people search — not a hardcoded profile link. Review the top results and confirm you're following the right person before hitting Follow.</div>
+      </div>
+      <div class="help-card">
+        <span class="help-card-icon">📤</span>
+        <div class="help-card-title">6. Export Your List</div>
+        <div class="help-card-body">Once you've starred your picks, click "Export as Text" to download a clean summary with each expert's name, role, LinkedIn search link, and why they're worth following.</div>
+      </div>
+    </div>
+    <div class="help-tip">
+      <strong>Pro tip →</strong> LinkedIn search works best when you're already logged in. Open this tool in the same browser where you're signed into LinkedIn, then click Follow directly from the search results page. For orgs like Bellingcat, search results may show a Company page — look for the "Follow" button on the company profile instead.
+    </div>
+  </div>
+</div>
+
+<!-- LEVERAGE / HOW TO USE THIS IN REAL LIFE -->
+<div class="leverage-bar">
+  <button class="leverage-toggle" id="leverageToggle" onclick="toggleLeverage()">
+    <span>💡</span>
+    <span>How to Leverage VANTAGE — Real-World Workflows for Every Role</span>
+    <span class="leverage-toggle-arrow">▼</span>
+  </button>
+  <div class="leverage-content" id="leverageContent">
+
+    <div class="leverage-intro">
+      <h2>Turn Your LinkedIn Feed Into a<br><span>Threat Intelligence Machine</span></h2>
+      <p>Most people follow hundreds of accounts and get noise. This guide shows you how to use a curated expert feed as an active intelligence asset — not just a news scroll. Whether you're a SOC analyst, a CISO, a compliance professional, a researcher, or building a consulting practice, a properly curated LinkedIn feed changes how you work.</p>
+    </div>
+
+    <!-- SECTION: DAILY ROUTINES -->
+    <div class="leverage-section-title">Daily Routines — Making It a Habit</div>
+    <div class="leverage-use-grid">
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#ff6b6b,#ff922b)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">☀️</span>
+          <div>
+            <div class="lev-card-title">The 10-Minute Morning Intel Brief</div>
+            <div class="lev-card-role" style="color:#ff8787;">Daily Routine</div>
+          </div>
+        </div>
+        <div class="lev-card-body">Treat your curated LinkedIn feed as your morning intelligence brief — 10 minutes before your day starts. You're not scrolling, you're scanning for signals.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#ff6b6b"></div>Sort by "Most recent" not "Top" — LinkedIn's algorithm buries time-sensitive posts</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#ff6b6b"></div>Flag posts that reference active threat actors, new CVEs, or policy changes</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#ff6b6b"></div>Save posts with LinkedIn's bookmark feature for deeper reading later</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#ff6b6b"></div>Note who is posting about the same incident from different angles — that convergence is signal</div>
+        </div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#00d4aa,#4dabf7)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">🔔</span>
+          <div>
+            <div class="lev-card-title">Turn On Notifications for Top Tier</div>
+            <div class="lev-card-role" style="color:#00d4aa;">Notification Strategy</div>
+          </div>
+        </div>
+        <div class="lev-card-body">LinkedIn lets you turn on post notifications for individual people. Reserve this for your top 5–10 highest-signal follows — the ones who post original research.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#00d4aa"></div>Click the 🔔 bell on their profile to get notified when they post</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#00d4aa"></div>Reserve bells for researchers who break news, not commentators who react to it</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#00d4aa"></div>For daily-posting follows, skip notifications — let them surface in your feed</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#00d4aa"></div>This creates a "tier 1 alert layer" inside LinkedIn itself — no extra tools needed</div>
+        </div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#da77f2,#a78bfa)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">📌</span>
+          <div>
+            <div class="lev-card-title">Build a "Watching" List</div>
+            <div class="lev-card-role" style="color:#da77f2;">Focus Technique</div>
+          </div>
+        </div>
+        <div class="lev-card-body">Not all follows are equal. Maintain a mental (or written) tiered list: who you follow for breaking intel, who for strategic context, who for compliance/regulatory updates.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#da77f2"></div>Tier 1: Active researchers posting original analysis (check daily)</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#da77f2"></div>Tier 2: Strategic leaders posting industry context (check weekly)</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#da77f2"></div>Tier 3: Policy/compliance voices posting regulatory updates (check monthly)</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#da77f2"></div>Export your starred list from this tool and annotate it with these tiers</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: BY ROLE -->
+    <div class="leverage-section-title">By Role — What This Unlocks For You Specifically</div>
+    <div class="leverage-use-grid">
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#ff4d6d,#ff6b6b)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">🛡️</span>
+          <div>
+            <div class="lev-card-title">SOC Analyst / Threat Hunter</div>
+            <div class="lev-card-role" style="color:#ff6b6b;">Detection & Response</div>
+          </div>
+        </div>
+        <div class="lev-card-body">Your curated feed becomes an early warning system. Researchers post about active campaigns, new TTPs, and IOCs hours or days before they hit your threat intel feeds.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#ff6b6b"></div>Follow threat intel researchers (Katie Nickels, Adam Meyers) for real-time campaign analysis</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#ff6b6b"></div>Follow ransomware trackers (Allan Liska, Brett Callow) for early victim identification</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#ff6b6b"></div>When a new CVE drops, check if Jake Williams or Costin Raiu have posted — they contextualize exploitability faster than NVD</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#ff6b6b"></div>Use their posts to build hypothesis-driven hunts: "Researcher X says this actor is targeting healthcare — do I see related patterns?"</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#ff6b6b"></div>Cross-reference posts across multiple researchers when the same incident surfaces — triangulated signals are more reliable</div>
+        </div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#f0a500,#ffd43b)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">👔</span>
+          <div>
+            <div class="lev-card-title">CISO / Security Leader</div>
+            <div class="lev-card-role" style="color:#f0a500;">Strategic Intelligence</div>
+          </div>
+        </div>
+        <div class="lev-card-body">Your feed becomes your board prep. When executives ask "what should we be worried about?", you're drawing from curated expert discourse — not vendor marketing.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#f0a500"></div>Follow security leadership voices (Sounil Yu, Wendy Nather, Bruce Schneier) for strategic frameworks</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#f0a500"></div>Track how peers are responding to regulatory changes — Jen Easterly, Mark Weatherford post on this regularly</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#f0a500"></div>Use expert posts to build the narrative for board decks: "Three leading researchers flagged this threat class last month"</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#f0a500"></div>Identify which vendors are actually doing research vs. just publishing marketing — follow the researchers, not the company pages</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#f0a500"></div>Save posts that surface emerging risks to reference in tabletop exercises and security planning sessions</div>
+        </div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#74c0fc,#63e6be)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">📋</span>
+          <div>
+            <div class="lev-card-title">Compliance & GRC Professional</div>
+            <div class="lev-card-role" style="color:#74c0fc;">Regulatory Awareness</div>
+          </div>
+        </div>
+        <div class="lev-card-body">Policy and regulatory changes break on LinkedIn before they hit official channels. Following the right voices means you're never caught flat-footed by a rule change.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#74c0fc"></div>Jeff Dalton and Matthew Travis post CMMC updates, clarifications, and rulemaking changes in real time</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#74c0fc"></div>Ron Ross (NIST) posts context on framework updates — hearing from the author beats reading the PDF cold</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#74c0fc"></div>Follow privacy experts (Eva Galperin, Jen King) to stay ahead of state-level and international data law shifts</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#74c0fc"></div>When a new assessment guide drops, practitioners like Amira Armond immediately post practical interpretations</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#74c0fc"></div>Use saved posts as citations when briefing leadership on upcoming compliance deadlines</div>
+        </div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#a9e34b,#69db7c)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">🔍</span>
+          <div>
+            <div class="lev-card-title">Researcher / OSINT Analyst</div>
+            <div class="lev-card-role" style="color:#a9e34b;">Open Source Intelligence</div>
+          </div>
+        </div>
+        <div class="lev-card-body">Your feed becomes a live methodology library. The best OSINT practitioners share tradecraft publicly — techniques, tools, and case studies that sharpen your own work.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#a9e34b"></div>Nico Dekens posts platform-specific techniques for social media and registry OSINT constantly</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#a9e34b"></div>Michael Bazzell shares privacy and OSINT intersections — critical for understanding digital footprint exposure</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#a9e34b"></div>Follow Bellingcat for geolocation and satellite imagery techniques used in real investigations</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#a9e34b"></div>When you hit a dead end in an investigation, check if anyone in your feed has recently posted about that platform or technique</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#a9e34b"></div>Use researchers' posts to discover new tools before they reach mainstream coverage</div>
+        </div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#4dabf7,#da77f2)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">🤝</span>
+          <div>
+            <div class="lev-card-title">Consultant / Fractional CTO</div>
+            <div class="lev-card-role" style="color:#4dabf7;">Business Development</div>
+          </div>
+        </div>
+        <div class="lev-card-body">Your feed is your competitive intelligence. Understanding what practitioners and leaders are discussing helps you position services, anticipate client concerns, and demonstrate expertise in proposals.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#4dabf7"></div>When an expert flags an emerging risk (e.g. supply chain attacks hitting a specific sector), you can proactively reach out to clients in that space</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#4dabf7"></div>Quote or reference expert posts in proposals — "as researchers at Mandiant recently noted…" demonstrates current awareness</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#4dabf7"></div>Follow experts your ideal clients follow — their concerns show you what the market is worried about</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#4dabf7"></div>Engage thoughtfully on expert posts — a well-placed insightful comment in front of 50,000 followers is better than a cold outreach</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#4dabf7"></div>Use trending topics in expert feeds to inform your own LinkedIn content calendar</div>
+        </div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#cc5de8,#f783ac)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">🏭</span>
+          <div>
+            <div class="lev-card-title">OT / ICS / Critical Infrastructure</div>
+            <div class="lev-card-role" style="color:#cc5de8;">Industrial Security</div>
+          </div>
+        </div>
+        <div class="lev-card-body">OT security has a small but dense expert community. Following the right people gives you visibility into threats and incidents that rarely make mainstream security news.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#cc5de8"></div>Robert Lee and Lesley Carhart are essential — between them they cover both strategic and hands-on ICS security</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#cc5de8"></div>Dale Peterson surfaces ICS community debates and conference content you won't find elsewhere</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#cc5de8"></div>When a new ICS malware family surfaces, Joe Slowik provides the most rigorous technical attribution analysis</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#cc5de8"></div>Use their sector-specific posts to benchmark your own organization's OT risk posture</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#cc5de8"></div>Track regulatory developments from federal/defense voices — CISA OT guidance often surfaces here first</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: THOUGHT LEADERSHIP -->
+    <div class="leverage-section-title">Building Your Own Thought Leadership</div>
+    <div class="leverage-use-grid">
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#f0a500,#ff922b)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">✍️</span>
+          <div>
+            <div class="lev-card-title">Use Expert Posts as Content Fuel</div>
+            <div class="lev-card-role" style="color:#f0a500;">Content Strategy</div>
+          </div>
+        </div>
+        <div class="lev-card-body">The experts in your feed are a content goldmine — not to copy, but to react to, build on, and add your perspective. That's how you develop a voice.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#f0a500"></div>When a researcher posts a finding you have experience with, share your practitioner angle in a comment or your own post</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#f0a500"></div>"I saw X researcher post about this threat — here's what that means for defense contractors specifically" is a high-value post format</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#f0a500"></div>Use trends in your feed to identify what your audience is going to care about before they ask about it</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#f0a500"></div>Sharing a well-curated link with your original commentary shows your network you have your finger on the pulse</div>
+        </div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#00d4aa,#69db7c)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">🤲</span>
+          <div>
+            <div class="lev-card-title">Engage, Don't Just Consume</div>
+            <div class="lev-card-role" style="color:#00d4aa;">Community Building</div>
+          </div>
+        </div>
+        <div class="lev-card-body">Passive following builds your knowledge. Active engagement builds your reputation. The cybersecurity community on LinkedIn rewards thoughtful, substantive participation.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#00d4aa"></div>Add a substantive comment — not just "great post" — when you have something to add</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#00d4aa"></div>Tag relevant connections when an expert post would be useful to them — adds value without spamming</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#00d4aa"></div>Ask follow-up questions on technical posts — researchers often answer and the thread becomes a resource</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#00d4aa"></div>Over time, consistent engagement makes you a known name in the feeds of people who matter in your field</div>
+        </div>
+      </div>
+
+      <div class="lev-card">
+        <div class="lev-card-accent" style="background:linear-gradient(90deg,#a78bfa,#da77f2)"></div>
+        <div class="lev-card-header">
+          <span class="lev-card-icon">📊</span>
+          <div>
+            <div class="lev-card-title">Build a Weekly Intelligence Summary</div>
+            <div class="lev-card-role" style="color:#a78bfa;">Team Value / BD</div>
+          </div>
+        </div>
+        <div class="lev-card-body">One of the highest-value things you can do with a curated expert feed is synthesize it into a weekly digest for your team, clients, or LinkedIn audience.</div>
+        <div class="lev-bullets">
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#a78bfa"></div>Save 5–7 posts per week that represent the most important developments in your domain</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#a78bfa"></div>Write a short "week in review" LinkedIn post or internal Slack message with your own synthesis and takeaways</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#a78bfa"></div>Credit the experts you're drawing from — it builds goodwill and often gets you a share from them</div>
+          <div class="lev-bullet"><div class="lev-bullet-dot" style="background:#a78bfa"></div>Over 3–6 months this establishes you as a trusted curator in your network — which is its own form of authority</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECTION: DAILY WORKFLOW -->
+    <div class="leverage-section-title">Suggested Daily Workflow</div>
+    <div class="lev-workflow">
+      <div class="lev-workflow-title">⏱️ A Realistic 15-Minute Daily Intelligence Routine</div>
+      <div class="lev-steps">
+        <div class="lev-step">
+          <div class="lev-step-num">Step 01 · Morning</div>
+          <div class="lev-step-label">Scan Your Feed</div>
+          <div class="lev-step-desc">5 min. Switch to "Most Recent." Scan for posts from your Tier 1 follows. Flag anything referencing active campaigns, new CVEs, policy changes, or your industry sector.</div>
+        </div>
+        <div class="lev-step">
+          <div class="lev-step-num">Step 02 · Mid-Morning</div>
+          <div class="lev-step-label">Read Flagged Posts</div>
+          <div class="lev-step-desc">5 min. Open saved/bookmarked posts. Read for substance. Ask: does this change anything I'm monitoring? Is this something a client or colleague needs to know today?</div>
+        </div>
+        <div class="lev-step">
+          <div class="lev-step-num">Step 03 · Midday</div>
+          <div class="lev-step-label">Engage or Share</div>
+          <div class="lev-step-desc">2 min. If a post added value, add a substantive comment or share with context. This is how you build presence without creating original content from scratch every day.</div>
+        </div>
+        <div class="lev-step">
+          <div class="lev-step-num">Step 04 · Weekly</div>
+          <div class="lev-step-label">Synthesize & Write</div>
+          <div class="lev-step-desc">3 min / day amortized. Keep a running note of the week's key themes. Friday or Monday, turn it into a short post or internal briefing. This is where thought leadership compounds.</div>
+        </div>
+        <div class="lev-step">
+          <div class="lev-step-num">Step 05 · Monthly</div>
+          <div class="lev-step-label">Audit Your Follows</div>
+          <div class="lev-step-desc">Once a month, check if your follows are still high-signal. Unfollow anyone who's gone quiet, shifted topics, or is posting noise. Quality over volume — always.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALLOUT -->
+    <div class="lev-callout">
+      <span class="lev-callout-icon">💡</span>
+      <div class="lev-callout-body">
+        <strong>The compounding effect:</strong> After 90 days of a curated expert feed and consistent light engagement, your LinkedIn algorithm learns what you care about and starts surfacing more of it. Your feed becomes self-reinforcing — higher signal, less noise, more relevant connections finding you. The upfront investment of building this list pays dividends for years. <strong>The best threat intelligence isn't a product you subscribe to. It's a network you cultivate.</strong>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Search -->
+    <div class="panel">
+      <div class="search-wrap">
+        <div class="search-wrap-inner">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" id="searchInput" type="text" placeholder="Search name, topic, org..." oninput="filterExperts()">
+        </div>
+      </div>
+
+      <!-- Domain filters -->
+      <div class="panel-header">
+        <span class="panel-title">Filter by Domain</span>
+        <button class="btn btn-ghost" style="padding:4px 10px;font-size:10px;" onclick="clearFilters()">Clear</button>
+      </div>
+      <div class="domain-list scroll-fade" id="domainList" style="max-height:420px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- My Feed -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">⚡ My Follow List</span>
+        <span class="stat-num" id="feedCount" style="font-size:16px;">0</span>
+      </div>
+      <div id="feedList" class="feed-list">
+        <div class="feed-empty">
+          <div class="feed-empty-icon">📋</div>
+          Bookmark experts with ★ to build your follow list
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-amber" onclick="exportFeed()" id="exportBtn" style="opacity:0.4;pointer-events:none;">
+          📤 Export as Text
+        </button>
+        <button class="btn btn-ghost" onclick="clearFeed()" id="clearFeedBtn" style="opacity:0.4;pointer-events:none;">
+          Clear List
+        </button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- Starter packs -->
+    <div>
+      <p style="font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">Quick Starter Packs →</p>
+      <div class="starter-packs" id="starterPacks"></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <span class="results-label" id="resultsLabel">Showing <strong>58</strong> experts</span>
+      <select class="sort-select" id="sortSelect" onchange="filterExperts()">
+        <option value="default">Sort: Recommended</option>
+        <option value="name">Sort: A–Z</option>
+        <option value="freq">Sort: Most Active</option>
+      </select>
+    </div>
+
+    <!-- Grid -->
+    <div class="experts-grid" id="expertsGrid"></div>
+
+  </main>
+</div>
+<!-- NEATLABS.AI BANNER -->
+<div class="neatlabs-banner">
+  <div class="neatlabs-banner-inner">
+    <div class="banner-left">
+      <div class="banner-eyebrow">🛰️ Built by NEATLABS™</div>
+      <div class="banner-headline">More Tools. More Intel.<br>More Ways to Stay Ahead.</div>
+      <div class="banner-sub">VANTAGE is one of 200+ tools, platforms, and resources built by NEATLABS™ — a Service-Disabled Veteran-Owned cybersecurity firm with 28+ years of federal experience. Explore our full suite of free and professional tools at neatlabs.ai.</div>
+      <div class="banner-chips">
+        <span class="banner-chip">🔐 CMMC Compliance Tools</span>
+        <span class="banner-chip">🕵️ Privacy & Data Exposure Analysis</span>
+        <span class="banner-chip">📊 Threat Intelligence Platforms</span>
+        <span class="banner-chip">🧠 AI-Powered Security Research</span>
+        <span class="banner-chip">🏛️ Federal & Defense Consulting</span>
+        <span class="banner-chip">📋 SSP Manager & Templates</span>
+        <span class="banner-chip">🔍 OSINT & Attribution Tools</span>
+        <span class="banner-chip">⚙️ OT/ICS Security Resources</span>
+      </div>
+    </div>
+    <div class="banner-right">
+      <a class="banner-cta" href="https://neatlabs.ai" target="_blank" rel="noopener noreferrer">
+        Visit NEATLABS.ai <span class="banner-cta-arrow">→</span>
+      </a>
+      <div class="banner-note">Free tools · Professional services · SDVOSB</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER / DISCLAIMER -->
+<footer class="site-footer">
+  <div class="disclaimer-box">
+    <span class="disclaimer-icon">⚠️</span>
+    <div class="disclaimer-text">
+      <strong>DISCLAIMER —</strong> NEATLABS™ VANTAGE is provided by Security 360, LLC for informational and educational purposes only. All expert listings, descriptions, and domain classifications reflect our independent research and editorial judgment at the time of publication. <strong>We do not have a formal relationship with, and have not received compensation from, any individual or organization listed.</strong><br><br>
+      Because LinkedIn profiles, job titles, and organizational affiliations change frequently, <strong>we cannot independently verify that every search link resolves to the correct individual at all times.</strong> Search links open a LinkedIn people search — not a direct profile URL — to reduce false positives, but you should always <strong>verify the identity, credentials, and current role of any person before following them</strong> or treating their content as authoritative. Presence in this directory does not constitute an endorsement of any individual's views, opinions, or employer.<br><br>
+      NEATLABS™ is not affiliated with LinkedIn or Microsoft. LinkedIn® is a registered trademark of LinkedIn Corporation. Use of LinkedIn's platform is subject to their own Terms of Service.
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-brand">© 2025 <span>NEATLABS™ VANTAGE</span> · Security 360, LLC · SDVOSB</div>
+    <div class="footer-copy">Free to use · No login · No data collected · No affiliation with LinkedIn Corporation</div>
+  </div>
+</footer>
+
+</div><!-- /wrap -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────
+const DOMAINS = [
+  { id: "threat", name: "Threat Intelligence", icon: "🎯" },
+  { id: "vuln", name: "Vulnerability Research", icon: "🔓" },
+  { id: "ir", name: "Incident Response", icon: "🚨" },
+  { id: "malware", name: "Malware Analysis", icon: "🦠" },
+  { id: "ransom", name: "Ransomware Tracking", icon: "💰" },
+  { id: "osint", name: "OSINT & Investigations", icon: "🔍" },
+  { id: "privacy", name: "Privacy & Data Protection", icon: "🛡️" },
+  { id: "cmmc", name: "CMMC / NIST Compliance", icon: "📋" },
+  { id: "cloud", name: "Cloud Security", icon: "☁️" },
+  { id: "appsec", name: "Application Security", icon: "💻" },
+  { id: "ot", name: "OT / ICS Security", icon: "⚙️" },
+  { id: "ai", name: "AI / ML Security", icon: "🤖" },
+  { id: "supplychain", name: "Supply Chain Security", icon: "🔗" },
+  { id: "fed", name: "Federal & Defense", icon: "🏛️" },
+  { id: "leadership", name: "Security Leadership", icon: "📊" },
+];
+
+const STARTER_PACKS = [
+  { label: "🔥 SOC Analyst Starter", domains: ["threat","ir","malware"] },
+  { label: "🏛️ GovSec & CMMC", domains: ["cmmc","fed","supplychain"] },
+  { label: "🔍 OSINT & Investigations", domains: ["osint","threat","privacy"] },
+  { label: "☁️ Cloud-Native Security", domains: ["cloud","appsec","ai"] },
+  { label: "🦠 Malware & Ransomware", domains: ["malware","ransom","ir"] },
+  { label: "⚙️ Critical Infrastructure", domains: ["ot","supplychain","fed"] },
+  { label: "🤖 AI Security", domains: ["ai","appsec","threat"] },
+];
+
+// Build a LinkedIn people-search URL from a name + optional keywords
+// This is the same approach as the original — searches LinkedIn so you always find the real person
+function liSearch(name, keywords) {
+  const q = encodeURIComponent([name, keywords].filter(Boolean).join(' '));
+  return `https://www.linkedin.com/search/results/people/?keywords=${q}&origin=GLOBAL_SEARCH_HEADER`;
+}
+
+const EXPERTS = [
+  // THREAT INTEL
+  { name:"Katie Nickels", title:"Director of Intelligence, Red Canary | SANS Instructor", domains:["threat","ir"], signals:["MITRE ATT&CK Contributor","SANS FOR578","Conference Speaker"], freq:"Daily", knownFor:"Bridges threat actor campaign analysis with defensive detection guidance. Best source for ATT&CK technique context with real-world attacker behavior.", avatar:"KN", linkedin:liSearch("Katie Nickels","Red Canary threat intelligence SANS") },
+  { name:"John Hultquist", title:"VP Intelligence Analysis, Mandiant / Google", domains:["threat","ir"], signals:["Mandiant VP","Nation-State Expert","Reuters/NYT Source"], freq:"3–5x/week", knownFor:"Nation-state threat actor analysis at its sharpest. Provides unclassified context on APT activity that you won't get elsewhere.", avatar:"JH", linkedin:liSearch("John Hultquist","Mandiant Google threat intelligence APT") },
+  { name:"Chris Krebs", title:"Founding Partner, Krebs Stamos Group | Former CISA Director", domains:["threat","fed","leadership"], signals:["Former CISA Director","Critical Infrastructure","Election Security"], freq:"2–4x/week", knownFor:"Strategic view on adversarial threats with government-level context. Excellent on critical infrastructure threats and policy.", avatar:"CK", linkedin:liSearch("Chris Krebs","CISA Director Krebs Stamos cybersecurity") },
+  { name:"Dmitri Alperovitch", title:"Co-founder, CrowdStrike | Chairman, Silverado Policy Accelerator", domains:["threat","fed"], signals:["CrowdStrike Co-founder","Russia/China Expert","Policy Advocate"], freq:"3–4x/week", knownFor:"One of the original nation-state threat hunters. Unmatched perspective on Russian and Chinese cyber operations.", avatar:"DA", linkedin:liSearch("Dmitri Alperovitch","CrowdStrike Silverado cybersecurity") },
+  { name:"Adam Meyers", title:"SVP Intelligence, CrowdStrike", domains:["threat","malware"], signals:["CrowdStrike Intelligence","eCrime Tracking","Adversary Naming"], freq:"3x/week", knownFor:"Deep adversary intelligence on both nation-state and eCrime actors. Pioneered the adversary-centric naming convention used industrywide.", avatar:"AM", linkedin:liSearch("Adam Meyers","CrowdStrike SVP intelligence cybersecurity") },
+  { name:"Allan Liska", title:"Ransomware Expert, Recorded Future | CSIRT", domains:["ransom","threat","ir"], signals:["Ransomware Author","Recorded Future","CSIRT Veteran"], freq:"Daily", knownFor:"The most data-driven voice in ransomware tracking. Daily stats, group activity, and debunking the hype — essential follow for any SOC.", avatar:"AL", linkedin:liSearch("Allan Liska","Recorded Future ransomware threat intelligence") },
+  { name:"Brett Callow", title:"Threat Analyst, Emsisoft", domains:["ransom","threat"], signals:["Emsisoft Analyst","Ransomware Tracker","Media Source"], freq:"Daily", knownFor:"Tireless tracker of ransomware incidents and victim leaks. If a company was hit, Brett likely knows before the press release.", avatar:"BC", linkedin:liSearch("Brett Callow","Emsisoft ransomware analyst") },
+  { name:"Kimberly Goody", title:"Senior Manager, Financial Crime Analysis, Mandiant", domains:["threat","malware","ransom"], signals:["eCrime Expert","FIN Group Analysis","Financial Fraud Intel"], freq:"2–3x/week", knownFor:"Exceptional analysis of financially-motivated threat actors. Best source for understanding eCrime ecosystems and FIN group TTPs.", avatar:"KG", linkedin:liSearch("Kimberly Goody","Mandiant financial crime cybersecurity intelligence") },
+
+  // VULNERABILITY RESEARCH
+  { name:"Katie Moussouris", title:"Founder & CEO, Luta Security | Pioneer of Bug Bounty", domains:["vuln","appsec","leadership"], signals:["Bug Bounty Pioneer","VDP Policy","Microsoft MSRC Alumni"], freq:"3–4x/week", knownFor:"Created Microsoft's first bug bounty program. Leading voice on coordinated vulnerability disclosure policy and the ethics of security research.", avatar:"KM", linkedin:liSearch("Katie Moussouris","Luta Security bug bounty vulnerability disclosure") },
+  { name:"Jerry Bell", title:"CISO, Co-host Defensive Security Podcast", domains:["vuln","ir","leadership"], signals:["Defensive Security Podcast","CISO","Patch Prioritization"], freq:"3x/week", knownFor:"Cuts through vulnerability hype with practical severity context. His podcast is mandatory listening for any defensive security professional.", avatar:"JB", linkedin:liSearch("Jeremiah Bell","Defensive Security Podcast CISO vulnerability") },
+  { name:"Patrick Gray", title:"Host, Risky Business Podcast", domains:["vuln","threat","leadership"], signals:["Risky Business Podcast","20yr Security Journalist","Industry Commentator"], freq:"2–3x/week", knownFor:"Best security podcast in the game. Sharp editorial lens on which vulns actually matter and why the industry gets things wrong.", avatar:"PG", linkedin:liSearch("Patrick Gray","Risky Business Podcast cybersecurity journalist") },
+  { name:"Jake Williams", title:"Faculty, IANS Research | Former NSA TAO", domains:["vuln","threat","ir"], signals:["Former NSA TAO","IANS Faculty","Forensics Expert"], freq:"Daily", knownFor:"Provides elite-level technical context on vulnerabilities and exploitation from a real offensive operator's perspective. Prolific and precise.", avatar:"JW", linkedin:liSearch("Jake Williams","IANS Research NSA cybersecurity forensics") },
+  { name:"Marcus Hutchins", title:"Security Researcher | WannaCry Stopper", domains:["malware","vuln"], signals:["WannaCry Sinkhole","Reverse Engineer","MalwareTech"], freq:"2–3x/week", knownFor:"Deep malware reverse engineering content with rare transparency about the research process. Stopped WannaCry ransomware by accident.", avatar:"MH", linkedin:liSearch("Marcus Hutchins","MalwareTech WannaCry malware researcher") },
+
+  // INCIDENT RESPONSE / DFIR
+  { name:"Lesley Carhart", title:"Principal ICS Security Researcher, Dragos", domains:["ir","ot","threat"], signals:["Dragos","ICS/SCADA IR","@hacks4pancakes"], freq:"Daily", knownFor:"OT incident response expertise with outstanding clarity and honesty. Essential for anyone covering industrial cybersecurity and SCADA threats.", avatar:"LC", linkedin:liSearch("Lesley Carhart","Dragos ICS incident response hacks4pancakes") },
+  { name:"Andrew Case", title:"Director of Research, Volexity", domains:["ir","malware","vuln"], signals:["Volatility Framework","Memory Forensics","Volexity Research"], freq:"2x/week", knownFor:"Co-creator of Volatility Framework. The deepest memory forensics content you'll find — essential for advanced DFIR practitioners.", avatar:"AC", linkedin:liSearch("Andrew Case","Volexity Volatility memory forensics DFIR") },
+  { name:"Jai Vijayan", title:"Technology Journalist, Dark Reading | Breach Coverage", domains:["ir","threat"], signals:["Dark Reading","Breach Reporting","Security Journalist"], freq:"Daily", knownFor:"One of the most reliable beat reporters covering major breaches and incident response developments. Fast, accurate, and well-sourced.", avatar:"JV", linkedin:liSearch("Jai Vijayan","Dark Reading security journalist breach coverage") },
+
+  // MALWARE ANALYSIS
+  { name:"Costin Raiu", title:"Independent Researcher | Former Kaspersky GReAT Director", domains:["malware","threat","vuln"], signals:["Kaspersky GReAT","APT Analysis","Zero-Day Research"], freq:"3–4x/week", knownFor:"One of the world's foremost APT researchers. Post-Kaspersky he's freer than ever — expect sharp, independent nation-state malware analysis.", avatar:"CR", linkedin:liSearch("Costin Raiu","Kaspersky GReAT APT malware researcher") },
+  { name:"Mikko Hyppönen", title:"Chief Research Officer, WithSecure", domains:["malware","threat","leadership"], signals:["30yr Security Veteran","WithSecure CRO","TED Speaker"], freq:"Daily", knownFor:"Three decades of threat research distilled into highly accessible posts. One of the most respected voices across the entire security community.", avatar:"MH2", linkedin:liSearch("Mikko Hypponen","WithSecure CRO malware threat research TED") },
+  { name:"Vitali Kremez", title:"CEO, AdvIntel | Criminal Threat Intelligence", domains:["malware","ransom","threat"], signals:["AdvIntel CEO","eCrime Intelligence","TrickBot/Conti Analysis"], freq:"3–4x/week", knownFor:"Criminal underground intelligence from someone with direct visibility into Conti, TrickBot, and similar operations. Exceptional eCrime sourcing.", avatar:"VK", linkedin:liSearch("Vitali Kremez","AdvIntel ransomware eCrime Conti TrickBot") },
+
+  // OSINT
+  { name:"Bellingcat", title:"Investigative Journalism & OSINT Research Network", domains:["osint","threat"], signals:["Open Source Investigations","Conflict Zone Analysis","MH17 Investigation"], freq:"Daily", knownFor:"Redefined open source investigations. Their geolocation, satellite imagery, and social media analysis techniques are now standard in threat intel.", avatar:"BC2", linkedin:liSearch("Bellingcat","investigative journalism OSINT open source intelligence") },
+  { name:"Nico Dekens", title:"Intelligence Analyst | OSINT & CTI Practitioner", domains:["osint","threat"], signals:["OSINT Combine","@Dutch_OSINTguy","CTI Trainer"], freq:"Daily", knownFor:"OSINT tools, techniques, and platform-specific investigative methods. Consistently shares actionable tradecraft for analysts at all levels.", avatar:"ND", linkedin:liSearch("Nico Dekens","Dutch OSINTguy OSINT Combine CTI analyst") },
+  { name:"Michael Bazzell", title:"Host, Privacy Security OSINT Show | Author", domains:["osint","privacy"], signals:["OSINT Techniques Author","Podcast Host","FBI Alum"], freq:"1–2x/week", knownFor:"The most practical OSINT and privacy curriculum available. Former FBI cyber unit — his research and books define the professional OSINT practice.", avatar:"MB", linkedin:liSearch("Michael Bazzell","OSINT Techniques podcast FBI privacy security") },
+  { name:"Joe Gray", title:"OSINT Instructor, Senior Security Architect", domains:["osint","appsec"], signals:["OSINT Trainer","Dark Web Research","Social Engineering"], freq:"2–3x/week", knownFor:"Trains the next generation of OSINT analysts. Excellent content on dark web investigation, social engineering, and practical attribution.", avatar:"JG", linkedin:liSearch("Joe Gray","OSINT instructor security architect dark web social engineering") },
+  { name:"Shelby Dacko", title:"OSINT Analyst & Investigator", domains:["osint","privacy"], signals:["OSINT Practitioner","Open Source Research","Investigations"], freq:"2–3x/week", knownFor:"Practical, accessible OSINT content for working investigators. Strong focus on digital footprint analysis and subject research tradecraft.", avatar:"SD", linkedin:liSearch("Shelby Dacko","OSINT analyst investigator open source intelligence") },
+
+  // PRIVACY & DATA PROTECTION
+  { name:"Eva Galperin", title:"Director of Cybersecurity, EFF | Stalkerware Expert", domains:["privacy","threat","leadership"], signals:["EFF","Stalkerware Coalition","Journalist Protection"], freq:"3–4x/week", knownFor:"Leading advocate against stalkerware and surveillance of at-risk populations. Essential for understanding the intersection of tech and human rights.", avatar:"EG", linkedin:liSearch("Eva Galperin","EFF Electronic Frontier Foundation cybersecurity stalkerware") },
+  { name:"Matt Mitchell", title:"Founder, CryptoHarlem | Digital Security Trainer", domains:["privacy","leadership"], signals:["CryptoHarlem","Equity in Security","Community Defense"], freq:"2–3x/week", knownFor:"Brings digital security to under-resourced communities. Unique lens on privacy as a civil rights issue — deeply important perspective.", avatar:"MM", linkedin:liSearch("Matt Mitchell","CryptoHarlem digital security privacy equity") },
+  { name:"Jen King", title:"Privacy and Data Policy Fellow, Stanford HAI", domains:["privacy","leadership","ai"], signals:["Stanford HAI","Data Policy","Consumer Privacy"], freq:"2–3x/week", knownFor:"Rigorous data policy research from one of the most credible academic centers on AI and privacy. Excellent on consumer data rights and regulation.", avatar:"JK2", linkedin:liSearch("Jen King","Stanford HAI privacy data policy fellow") },
+
+  // CMMC / NIST / COMPLIANCE
+  { name:"Jeff Dalton", title:"President, Broadsword Inc. | CMMC Author & Educator", domains:["cmmc","fed","leadership"], signals:["CMMC Textbook Author","Registered Practitioner Organization","DoD Expert"], freq:"Daily", knownFor:"Wrote the definitive CMMC implementation book. Prolific educator who breaks down complex CMMC requirements into actionable guidance.", avatar:"JD", linkedin:liSearch("Jeff Dalton","Broadsword CMMC author cybersecurity maturity model") },
+  { name:"Matthew Travis", title:"CEO, Cyber AB | Former CISA Deputy Director", domains:["cmmc","fed","leadership"], signals:["Cyber AB CEO","Former CISA","DoD Ecosystem Leader"], freq:"2–3x/week", knownFor:"Direct line to CMMC ecosystem updates from the organization governing the assessment and certification process.", avatar:"MT", linkedin:liSearch("Matthew Travis","Cyber AB CEO CMMC assessment accreditation") },
+  { name:"Ron Ross", title:"NIST Fellow | NIST SP 800-171 Lead", domains:["cmmc","fed","privacy"], signals:["NIST Fellow","SP 800-171 Author","FISMA Expert"], freq:"1–2x/week", knownFor:"He literally wrote the framework your CMMC controls are based on. Follow for authoritative NIST guidance directly from the source.", avatar:"RR", linkedin:liSearch("Ron Ross","NIST Fellow SP 800-171 FISMA cybersecurity framework") },
+  { name:"Amira Armond", title:"President, Kieri Solutions | CMMC Registered Practitioner", domains:["cmmc","fed"], signals:["CMMC RP","DoD Supply Chain","Small Business Compliance"], freq:"3–4x/week", knownFor:"One of the clearest explainers of CMMC requirements for small and mid-size defense contractors. Highly practical, no-hype guidance.", avatar:"AA", linkedin:liSearch("Amira Armond","Kieri Solutions CMMC registered practitioner DoD") },
+
+  // CLOUD SECURITY
+  { name:"Chris Farris", title:"Cloud Security Researcher, PrimeHarbor Technologies", domains:["cloud","vuln","appsec"], signals:["AWS Misconfiguration Research","Cloud IR","Bug Bounty"], freq:"3–4x/week", knownFor:"Finds and responsibly discloses major cloud misconfigurations before the bad guys do. Essential for AWS/Azure security teams.", avatar:"CF", linkedin:liSearch("Chris Farris","PrimeHarbor cloud security AWS misconfiguration research") },
+  { name:"Scott Piper", title:"Principal Cloud Security Researcher", domains:["cloud","threat","appsec"], signals:["AWS Security Research","flaws.cloud Creator","Cloud Security Alliance"], freq:"3x/week", knownFor:"Created flaws.cloud for AWS security education. Deep technical cloud attack research with clear remediation context.", avatar:"SP", linkedin:liSearch("Scott Piper","flaws.cloud AWS cloud security researcher") },
+  { name:"Kat Traxler", title:"Security Researcher, Vectra AI | GCP Expert", domains:["cloud","appsec","threat"], signals:["GCP Attack Research","IAM Abuse Expert","Vectra AI"], freq:"2–3x/week", knownFor:"The deepest public GCP security research available. Specializes in IAM abuse, privilege escalation, and Google Cloud attack paths.", avatar:"KT", linkedin:liSearch("Kat Traxler","Vectra AI GCP Google Cloud IAM security researcher") },
+  { name:"Rami McCarthy", title:"Enterprise Security | Cloud Native Security Practitioner", domains:["cloud","appsec","leadership"], signals:["Cloud Native Security","DevSecOps","GitHub Actions Security"], freq:"3–4x/week", knownFor:"Bridges the gap between DevOps and security. Excellent on CI/CD pipeline security, GitHub Actions abuse, and cloud-native threat models.", avatar:"RM", linkedin:liSearch("Rami McCarthy","cloud native security DevSecOps GitHub Actions enterprise") },
+
+  // APPSEC
+  { name:"Tanya Janca", title:"Founder, We Hack Purple | AppSec Educator", domains:["appsec","leadership"], signals:["We Hack Purple","OWASP","Developer Security Education"], freq:"Daily", knownFor:"Makes AppSec accessible to developers without a security background. One of the most impactful security educators active today.", avatar:"TJ", linkedin:liSearch("Tanya Janca","We Hack Purple OWASP AppSec educator developer security") },
+  { name:"Clint Gibler", title:"Head of Security Research, Semgrep | tl;dr sec Author", domains:["appsec","cloud"], signals:["tl;dr sec Newsletter","AppSec Research","Developer-First Security"], freq:"2x/week", knownFor:"His tl;dr sec newsletter curates the most important AppSec research weekly — essential if you can't read everything yourself.", avatar:"CG", linkedin:liSearch("Clint Gibler","Semgrep tldrsec newsletter appsec security research") },
+  { name:"James Kettle", title:"Director of Research, PortSwigger (Burp Suite)", domains:["appsec","vuln"], signals:["Burp Suite Research","HTTP Smuggling","Web Cache Attacks"], freq:"2–3x/week", knownFor:"Discovers and publishes novel web attack classes that reshape how the entire industry thinks about HTTP-layer security.", avatar:"JK", linkedin:liSearch("James Kettle","PortSwigger Burp Suite HTTP smuggling web security research") },
+  { name:"Sam Curry", title:"Security Researcher | Bug Bounty Hunter", domains:["appsec","vuln"], signals:["API Security Research","Automotive Hacks","Vehicle API Vulnerabilities"], freq:"2–3x/week", knownFor:"Shocking, real-world API vulnerability research — hacked most major car brands' connected systems. Essential reading for API security practitioners.", avatar:"SC", linkedin:liSearch("Sam Curry","security researcher bug bounty API automotive hacking") },
+
+  // OT / ICS
+  { name:"Dale Peterson", title:"Founder, Digital Bond | S4 Conference Organizer", domains:["ot","fed","leadership"], signals:["S4 Conference","ICS Security Pioneer","20+ years OT"], freq:"3–4x/week", knownFor:"Founding figure in ICS security. Organizes the premier ICS conference globally and consistently challenges the industry on real progress.", avatar:"DP", linkedin:liSearch("Dale Peterson","Digital Bond S4 conference ICS security OT") },
+  { name:"Robert M. Lee", title:"CEO & Co-founder, Dragos | ICS Threat Expert", domains:["ot","threat","fed"], signals:["Dragos CEO","Ukraine Grid Attack Analysis","CRASHOVERRIDE"], freq:"3–4x/week", knownFor:"Led the technical analysis of CRASHOVERRIDE/Industroyer — the malware that turned off Ukraine's power grid. Definitive ICS threat intelligence.", avatar:"RL", linkedin:liSearch("Robert Lee","Dragos CEO ICS OT security CRASHOVERRIDE industrial") },
+  { name:"Joe Slowik", title:"Threat Intelligence Manager, Huntress", domains:["ot","threat","malware"], signals:["Dragos Alum","ICS Malware Analysis","Attribution Research"], freq:"2–3x/week", knownFor:"Rigorous, skeptical threat attribution analysis. Former Dragos researcher who helped analyze TRITON/TRISIS and other ICS-targeting malware.", avatar:"JS", linkedin:liSearch("Joe Slowik","Huntress Dragos ICS malware threat intelligence TRITON") },
+
+  // AI SECURITY
+  { name:"Gary McGraw", title:"Founder, Berryville Institute of Machine Learning Security", domains:["ai","appsec","leadership"], signals:["BIML Founder","ML Security Atlas","Software Security Pioneer"], freq:"2x/week", knownFor:"Defined what software security means for machine learning systems. His BIML Architectural Risk Analysis is the gold standard for AI security frameworks.", avatar:"GM", linkedin:liSearch("Gary McGraw","BIML Berryville machine learning security software") },
+  { name:"Johann Rehberger", title:"Security Researcher | Prompt Injection & AI Security Expert", domains:["ai","appsec","vuln"], signals:["Prompt Injection Research","AI Security Blog","LLM Exploitation"], freq:"3–4x/week", knownFor:"Prolific AI security researcher and bug bounty hunter. Consistently finds and demonstrates real exploits against LLM-powered applications.", avatar:"JR", linkedin:liSearch("Johann Rehberger","prompt injection AI security researcher LLM exploitation") },
+  { name:"Sven Cattell", title:"Founder, AI Village | ML Security Practitioner", domains:["ai","threat","appsec"], signals:["AI Village DEF CON","ML Security Research","Adversarial ML"], freq:"2–3x/week", knownFor:"Runs the AI Village at DEF CON — the hub for adversarial ML and AI security research. Front-row view of what the AI attack surface actually looks like.", avatar:"SV", linkedin:liSearch("Sven Cattell","AI Village DEF CON machine learning security adversarial") },
+
+  // SUPPLY CHAIN
+  { name:"Ax Sharma", title:"Security Researcher, Sonatype", domains:["supplychain","appsec","malware"], signals:["npm/PyPI Malware","Sonatype Research","Open Source Threats"], freq:"Daily", knownFor:"Tracks malicious packages in npm, PyPI, and other registries in real time. Essential for development teams who care about dependency security.", avatar:"AS", linkedin:liSearch("Ax Sharma","Sonatype npm PyPI malware open source supply chain security") },
+  { name:"Feross Aboukhadijeh", title:"Founder, Socket.dev | Open Source Security", domains:["supplychain","appsec"], signals:["Socket.dev Founder","npm Security","Open Source Maintainer"], freq:"2–3x/week", knownFor:"Building the tools that detect malicious open source packages before they hit production. Deep technical and policy insights on software supply chain risk.", avatar:"FA", linkedin:liSearch("Feross Aboukhadijeh","Socket.dev npm open source supply chain security") },
+  { name:"Melissa Elliott", title:"Vulnerability Intelligence Analyst | Supply Chain Threat Research", domains:["supplychain","vuln","threat"], signals:["Dependency Risk","OSS Security","Vulnerability Chaining"], freq:"2–3x/week", knownFor:"Sharp analysis of dependency vulnerabilities and how attackers chain them for supply chain compromise. Excellent follow for DevSecOps practitioners.", avatar:"ME", linkedin:liSearch("Melissa Elliott","supply chain vulnerability intelligence analyst cybersecurity") },
+
+  // FEDERAL / DEFENSE
+  { name:"Jen Easterly", title:"Former CISA Director | CISA Founder", domains:["fed","leadership","threat"], signals:["CISA Director","NSA Alum","Army Veteran"], freq:"2–3x/week", knownFor:"Transformed CISA into a serious operational agency. Post-government she's even more candid about what actually works in national cyber defense.", avatar:"JE", linkedin:liSearch("Jen Easterly","CISA Director NSA cybersecurity veteran federal") },
+  { name:"Mark Weatherford", title:"CSO, National Cybersecurity Center | Former DHS Deputy", domains:["fed","cmmc","leadership"], signals:["Former DHS Deputy Undersecretary","State CISO x2","Policy Architect"], freq:"2–3x/week", knownFor:"Shaped federal cybersecurity policy at its highest levels. Translates government-grade thinking into actionable enterprise security strategy.", avatar:"MW", linkedin:liSearch("Mark Weatherford","DHS National Cybersecurity Center CISO federal policy") },
+  { name:"Suzanne Spaulding", title:"Senior Adviser, CSIS | Former DHS Under Secretary", domains:["fed","leadership"], signals:["Former DHS Under Secretary","CSIS Senior Adviser","Critical Infrastructure"], freq:"1–2x/week", knownFor:"Rare combination of legal, intelligence, and operational expertise on national cyber policy. Posts infrequently but with exceptional substance.", avatar:"SS", linkedin:liSearch("Suzanne Spaulding","CSIS DHS Under Secretary cybersecurity federal policy") },
+
+  // SECURITY LEADERSHIP
+  { name:"Sounil Yu", title:"CISO | Creator of Cyber Defense Matrix", domains:["leadership","ai","cloud"], signals:["Cyber Defense Matrix","CISO","Framework Author"], freq:"3–4x/week", knownFor:"Created the Cyber Defense Matrix — the most useful security architecture visualization tool available. Strategic, creative, and always worth reading.", avatar:"SY", linkedin:liSearch("Sounil Yu","Cyber Defense Matrix CISO security framework") },
+  { name:"Wendy Nather", title:"Head of Advisory CISOs, Cisco Duo | Security Democratizer", domains:["leadership","privacy","appsec"], signals:["Cisco Duo","Security Democracy","Downstream Defender"], freq:"3x/week", knownFor:"Champion for under-resourced organizations getting security right. Empathetic, practical, and deeply human approach to security leadership.", avatar:"WN", linkedin:liSearch("Wendy Nather","Cisco Duo advisory CISO security democratization") },
+  { name:"Bruce Schneier", title:"Security Technologist & Author | Harvard Kennedy School", domains:["leadership","privacy","ai"], signals:["20+ Books","Harvard Fellow","Crypto-Gram Newsletter"], freq:"2–3x/week", knownFor:"The philosopher-king of cybersecurity. His long-view essays on security, technology, and power are required reading for security strategists.", avatar:"BS", linkedin:liSearch("Bruce Schneier","security technologist author Harvard Crypto-Gram") },
+  { name:"Tarah Wheeler", title:"Cyber Fellow, New America | Global Cyber Policy Expert", domains:["leadership","fed","privacy"], signals:["New America Fellow","Cyber Policy","International Standards"], freq:"3x/week", knownFor:"Bridges the gap between technical security and international cyber policy. Essential for understanding how national security decisions affect industry.", avatar:"TW", linkedin:liSearch("Tarah Wheeler","New America cyber fellow policy international standards") },
+];
+
+// ─── STATE ──────────────────────────────────────────────────
+let activeDomains = new Set();
+let savedExperts = new Set();
+let searchQuery = '';
+
+// ─── INIT ───────────────────────────────────────────────────
+function init() {
+  renderDomainList();
+  renderStarterPacks();
+  filterExperts();
+}
+
+function renderDomainList() {
+  const list = document.getElementById('domainList');
+  const counts = {};
+  EXPERTS.forEach(e => e.domains.forEach(d => { counts[d] = (counts[d] || 0) + 1; }));
+
+  list.innerHTML = DOMAINS.map(d => `
+    <button class="domain-btn ${activeDomains.has(d.id) ? 'active' : ''}"
+      onclick="toggleDomain('${d.id}')">
+      <span class="domain-icon">${d.icon}</span>
+      <span>${d.name}</span>
+      <span class="domain-count">${counts[d.id] || 0}</span>
+    </button>
+  `).join('');
+}
+
+function renderStarterPacks() {
+  const el = document.getElementById('starterPacks');
+  el.innerHTML = STARTER_PACKS.map(p => `
+    <button class="pack-btn" onclick="applyPack(${JSON.stringify(p.domains)})">${p.label}</button>
+  `).join('');
+}
+
+// ─── FILTERING ──────────────────────────────────────────────
+function filterExperts() {
+  searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+  const sort = document.getElementById('sortSelect').value;
+
+  let filtered = EXPERTS.filter(e => {
+    const domainMatch = activeDomains.size === 0 || e.domains.some(d => activeDomains.has(d));
+    const searchMatch = !searchQuery || [e.name, e.title, e.knownFor, ...e.signals, ...e.domains]
+      .some(s => s.toLowerCase().includes(searchQuery));
+    return domainMatch && searchMatch;
+  });
+
+  if (sort === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
+  else if (sort === 'freq') {
+    const freqScore = f => f.startsWith('D') ? 5 : f.startsWith('3') ? 4 : f.startsWith('2') ? 3 : 2;
+    filtered.sort((a, b) => freqScore(b.freq) - freqScore(a.freq));
+  }
+
+  document.getElementById('resultsLabel').innerHTML = `Showing <strong>${filtered.length}</strong> expert${filtered.length !== 1 ? 's' : ''}`;
+  renderGrid(filtered);
+}
+
+function renderGrid(experts) {
+  const grid = document.getElementById('expertsGrid');
+  if (experts.length === 0) {
+    grid.innerHTML = `<div class="no-results"><span class="no-results-icon">🔭</span>No experts match your current filters.<br>Try broadening your search or clearing domain filters.</div>`;
+    return;
+  }
+  grid.innerHTML = experts.map(e => renderCard(e)).join('');
+}
+
+function renderCard(e) {
+  const saved = savedExperts.has(e.name);
+  const domainTags = e.domains.map(d => {
+    const dom = DOMAINS.find(x => x.id === d);
+    return dom ? `<span class="domain-tag tag-${d}">${dom.icon} ${dom.name}</span>` : '';
+  }).join('');
+  const signals = e.signals.map(s => `<span class="signal-chip">${s}</span>`).join('');
+
+  return `
+    <div class="expert-card ${saved ? 'card-saved' : ''}" id="card-${e.name.replace(/\s/g,'_')}">
+      <div class="expert-header">
+        <div class="expert-avatar">${e.avatar}</div>
+        <div class="expert-meta">
+          <div class="expert-name">${e.name}</div>
+          <div class="expert-title">${e.title}</div>
+        </div>
+        <button class="save-btn ${saved ? 'saved' : ''}" onclick="toggleSave('${e.name.replace(/'/g,"\\'")}', this)" title="${saved ? 'Remove from list' : 'Add to My Follow List'}">
+          ${saved ? '★' : '☆'}
+        </button>
+      </div>
+      <div class="card-domains">${domainTags}</div>
+      <div class="known-for">${e.knownFor}</div>
+      <div class="signals-row">${signals}</div>
+      <div class="card-footer">
+        <span class="freq-label"><span class="freq-dot"></span>Posts ${e.freq}</span>
+        <a class="follow-btn" href="${e.linkedin}" target="_blank" rel="noopener noreferrer">
+          <svg class="li-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          Follow on LinkedIn
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+// ─── INTERACTIONS ────────────────────────────────────────────
+function toggleDomain(id) {
+  if (activeDomains.has(id)) activeDomains.delete(id);
+  else activeDomains.add(id);
+  renderDomainList();
+  filterExperts();
+}
+
+function clearFilters() {
+  activeDomains.clear();
+  document.getElementById('searchInput').value = '';
+  searchQuery = '';
+  renderDomainList();
+  filterExperts();
+}
+
+function applyPack(domains) {
+  activeDomains = new Set(domains);
+  renderDomainList();
+  filterExperts();
+  document.querySelector('.content').scrollIntoView({ behavior: 'smooth' });
+}
+
+function toggleSave(name, btn) {
+  const expert = EXPERTS.find(e => e.name === name);
+  if (!expert) return;
+
+  if (savedExperts.has(name)) {
+    savedExperts.delete(name);
+    btn.textContent = '☆';
+    btn.classList.remove('saved');
+    const card = document.getElementById(`card-${name.replace(/\s/g,'_')}`);
+    if (card) card.classList.remove('card-saved');
+    showToast(`Removed ${name.split(' ')[0]} from your list`);
+  } else {
+    savedExperts.add(name);
+    btn.textContent = '★';
+    btn.classList.add('saved');
+    const card = document.getElementById(`card-${name.replace(/\s/g,'_')}`);
+    if (card) card.classList.add('card-saved');
+    showToast(`Added ${name.split(' ')[0]} to your follow list ★`);
+  }
+  renderFeed();
+}
+
+function renderFeed() {
+  const list = document.getElementById('feedList');
+  const count = document.getElementById('feedCount');
+  const exportBtn = document.getElementById('exportBtn');
+  const clearBtn = document.getElementById('clearFeedBtn');
+
+  count.textContent = savedExperts.size;
+
+  if (savedExperts.size === 0) {
+    list.innerHTML = `<div class="feed-empty"><div class="feed-empty-icon">📋</div>Bookmark experts with ★ to build your follow list</div>`;
+    exportBtn.style.opacity = '0.4'; exportBtn.style.pointerEvents = 'none';
+    clearBtn.style.opacity = '0.4'; clearBtn.style.pointerEvents = 'none';
+    return;
+  }
+
+  exportBtn.style.opacity = '1'; exportBtn.style.pointerEvents = 'auto';
+  clearBtn.style.opacity = '1'; clearBtn.style.pointerEvents = 'auto';
+
+  const saved = EXPERTS.filter(e => savedExperts.has(e.name));
+  list.innerHTML = saved.map(e => `
+    <div class="feed-item">
+      <span style="font-size:13px;">${EXPERTS.find(x=>x.name===e.name)?.domains[0] ? DOMAINS.find(d=>d.id===EXPERTS.find(x=>x.name===e.name).domains[0])?.icon : '👤'}</span>
+      <span style="font-size:12px;font-weight:700;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e.name}</span>
+      <button class="feed-remove" onclick="removeSaved('${e.name.replace(/'/g,"\\'")}')">×</button>
+    </div>
+  `).join('');
+}
+
+function removeSaved(name) {
+  savedExperts.delete(name);
+  // Update card button
+  const cardId = `card-${name.replace(/\s/g,'_')}`;
+  const card = document.getElementById(cardId);
+  if (card) {
+    card.classList.remove('card-saved');
+    const btn = card.querySelector('.save-btn');
+    if (btn) { btn.textContent = '☆'; btn.classList.remove('saved'); }
+  }
+  renderFeed();
+}
+
+function clearFeed() {
+  savedExperts.clear();
+  // Reset all cards
+  document.querySelectorAll('.card-saved').forEach(c => {
+    c.classList.remove('card-saved');
+    const btn = c.querySelector('.save-btn');
+    if (btn) { btn.textContent = '☆'; btn.classList.remove('saved'); }
+  });
+  renderFeed();
+}
+
+function exportFeed() {
+  const saved = EXPERTS.filter(e => savedExperts.has(e.name));
+  if (saved.length === 0) return;
+
+  const lines = [
+    'NEATLABS™ VANTAGE — My Expert Follow List',
+    '=' .repeat(50),
+    `Generated: ${new Date().toLocaleDateString()}`,
+    `Total experts: ${saved.length}`,
+    '',
+    ...saved.map(e => [
+      `${e.name}`,
+      `  Role:      ${e.title}`,
+      `  LinkedIn:  ${e.linkedin}`,
+      `  Active:    Posts ${e.freq}`,
+      `  Why:       ${e.knownFor.substring(0, 100)}...`,
+      ''
+    ].join('\n'))
+  ].join('\n');
+
+  const blob = new Blob([lines], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'neatlabs-vantage-follow-list.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`📤 Exported ${saved.length} experts`);
+}
+
+// ─── TOAST ──────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── THEME ──────────────────────────────────────────────────
+function toggleTheme() {
+  const html = document.documentElement;
+  const isLight = html.getAttribute('data-theme') === 'light';
+  if (isLight) {
+    html.removeAttribute('data-theme');
+    document.getElementById('themeIcon').textContent = '☀️';
+    document.getElementById('themeLabel').textContent = 'Light Mode';
+    localStorage.setItem('nl-theme', 'dark');
+    showToast('🌑 Dark mode activated');
+  } else {
+    html.setAttribute('data-theme', 'light');
+    document.getElementById('themeIcon').textContent = '🌙';
+    document.getElementById('themeLabel').textContent = 'Dark Mode';
+    localStorage.setItem('nl-theme', 'light');
+    showToast('☀️ Light mode — Microsoft Fluent style');
+  }
+}
+
+function applyStoredTheme() {
+  const stored = localStorage.getItem('nl-theme');
+  if (stored === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.getElementById('themeIcon').textContent = '🌙';
+    document.getElementById('themeLabel').textContent = 'Dark Mode';
+  }
+}
+
+// ─── BOOT ───────────────────────────────────────────────────
+function toggleHelp() {
+  const toggle = document.getElementById('helpToggle');
+  const content = document.getElementById('helpContent');
+  toggle.classList.toggle('open');
+  content.classList.toggle('open');
+}
+
+function toggleLeverage() {
+  const toggle = document.getElementById('leverageToggle');
+  const content = document.getElementById('leverageContent');
+  toggle.classList.toggle('open');
+  content.classList.toggle('open');
+  if (content.classList.contains('open')) {
+    setTimeout(() => content.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+}
+
+applyStoredTheme();
+init();
+</script>
+</body>
+</html>
